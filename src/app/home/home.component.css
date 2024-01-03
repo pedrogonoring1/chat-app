@@ -1,0 +1,56 @@
+
+
+.icon-hand {
+  width: 300px;
+}
+
+.label-informativa {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.input-message {
+  background-color: rgb(46, 46, 46);
+  color: rgb(168, 168, 168);
+  border: none;
+  border-radius: 50px;
+  height: 50px;
+  padding-left: 20px;
+  width: 50%;
+  margin-right: 7px;
+}
+
+.input-message:focus {
+  transition: 0.8s;
+  background-color: rgb(27, 27, 27);
+}
+
+.input-message:hover {
+  transition: 0.8s;
+  background-color: rgb(27, 27, 27);
+}
+
+.input-message::placeholder {
+  color: rgb(119, 119, 119);  /* Substitua com a cor desejada */
+}
+
+textarea:focus, input:focus, select:focus {
+  box-shadow: 0 0 0 0;
+  border: 0 none;
+  outline: 0;
+}
+
+
+
+.btn-send {
+  background-color: rgb(46, 46, 46);
+  color: rgb(119, 119, 119);
+  margin-left: 5px;
+  border-radius: 50px;
+  font-size: 22px;
+}
+
+.btn-send:hover {
+  transition: 0.8s;
+  background-color: rgb(27, 27, 27);
+}

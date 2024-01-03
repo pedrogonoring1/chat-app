@@ -1,0 +1,157 @@
+
+
+.name-user-page {
+  color: rgb(184, 184, 184);
+  margin-right: 10px;
+}
+
+.img-perfil-chat {
+  margin-top: -35px;
+}
+
+.btn-send {
+  background-color: rgb(46, 46, 46);
+  color: rgb(119, 119, 119);
+  margin-left: 5px;
+  border-radius: 50px;
+  font-size: 22px;
+}
+
+.btn-send:hover {
+  transition: 0.8s;
+  background-color: rgb(27, 27, 27);
+}
+
+.input-message {
+  background-color: rgb(46, 46, 46);
+  color: rgb(168, 168, 168);
+  border: none;
+  border-radius: 50px;
+  height: 50px;
+  padding-left: 20px;
+}
+
+.input-message:focus {
+  transition: 0.8s;
+  background-color: rgb(27, 27, 27);
+}
+
+.input-message:hover {
+  transition: 0.8s;
+  background-color: rgb(27, 27, 27);
+}
+
+.input-message::placeholder {
+  color: rgb(119, 119, 119);  /* Substitua com a cor desejada */
+}
+
+textarea:focus, input:focus, select:focus {
+  box-shadow: 0 0 0 0;
+  border: 0 none;
+  outline: 0;
+}
+
+.messages-container {
+  max-height: 400px; /* ou a altura desejada */
+  overflow-y: auto;
+}
+
+.label-mensagem {
+  max-width: 100%;
+  color: rgb(184, 184, 184);
+}
+
+.icon-user {
+  font-size: 15px;
+  color: rgb(138, 138, 138);
+}
+
+.img-user {
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+}
+
+.img-user-page {
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.img-user-page:hover {
+  transition: 0.5s;
+  opacity: 30%;
+}
+
+.name-user {
+  font-size: 13px;
+  margin-left: 7px;
+  font-weight: bold;
+  margin-top: 5px;
+  color: rgb(138, 138, 138);
+}
+
+.card-message {
+  background-color: rgb(46, 46, 46);
+  margin-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  border-radius: 15px 15px 15px 0px;
+}
+
+.card-owner-message {
+  background-color: rgb(58, 58, 58);
+  margin-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  border-radius: 15px 15px 0px 15px;
+}
+
+.hora-envio {
+  font-size: 12px;
+  color: rgb(138, 138, 138);
+  margin-top: 10px;
+}
+
+.bi-person-fill-check {
+  color: rgb(35, 190, 35);
+}
+
+.bi-person-fill-x {
+  color: rgb(255, 60, 34);
+}
+
+
+/* barra de roladgem */
+/* Para navegadores WebKit (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #6e6e6e;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #383838;
+  border-radius: 10px;
+}
+
+
+
+
+.img-container {
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Adiciona uma transição suave para a transformação */
+}
+
+.img-user.expanded {
+  width: 50%; /* Faz com que a imagem ocupe 100% da largura do contêiner pai */
+  height: auto; /* Mantém a proporção original da imagem */
+}
