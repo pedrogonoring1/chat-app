@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 
 import { FormsModule } from '@angular/forms';
 
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { HomeModule } from './home/home.module';
 import { ChatModule } from './chat/chat.module';
 import { ToastrModule } from 'ngx-toastr';
@@ -22,7 +21,6 @@ import { ToastrModule } from 'ngx-toastr';
     ChatModule,
     AppRoutingModule,
     ToastrModule.forRoot(),
-    TooltipModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
