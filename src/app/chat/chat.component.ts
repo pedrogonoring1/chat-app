@@ -48,7 +48,6 @@ export class ChatComponent implements OnInit  {
   }
 
   ngOnInit(): void {
-
     this.builderForm();
     this.recuperarDadosUserLogado();
     this.textExpandir = 'Expandir'
@@ -78,6 +77,8 @@ export class ChatComponent implements OnInit  {
       (err) => console.error(err),
       () => console.log('WebSocket closed')
     );
+
+    this.avisarNovoIntegrante();
   }
 
   public clicouExpandirImagem() {
@@ -130,6 +131,22 @@ export class ChatComponent implements OnInit  {
     return false;
   }
 
+  private avisarNovoIntegrante() {
+    let boasVindas = new MessageRequest({
+      NomeUser: 'Sistema',
+      Horario: this.obterHoraAtual(),
+      Content: `${this.nomeUser} acabou de entrar na conversa! 👋`,
+      Owner: false,
+      UrlImage: 'https://i.pinimg.com/originals/2d/cc/93/2dcc9384250518a03fc038c363b689b8.gif'
+    });
+
+    this.socket.next(JSON.stringify(boasVindas));
+    boasVindas.Owner = true;
+
+    this.messages.push(boasVindas);
+    this.scrollMessagesToBottom();
+  }
+
   private createMessage(content: string): MessageRequest {
     return new MessageRequest({
       NomeUser: this.nomeUser,
@@ -165,7 +182,7 @@ export class ChatComponent implements OnInit  {
 
   private scrollMessagesToBottom() {
     // Certifique-se de que há mensagens e a referência ao elemento está disponível
-    if (this.messagesContainer.length > 0) {
+    if (this.messagesContainer?.length > 0) {
       const messagesContainerElement = this.messagesContainer.first.nativeElement;
       messagesContainerElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
