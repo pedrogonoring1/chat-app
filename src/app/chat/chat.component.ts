@@ -61,7 +61,7 @@ export class ChatComponent implements OnInit  {
       UrlImage: 'https://i.pinimg.com/originals/2d/cc/93/2dcc9384250518a03fc038c363b689b8.gif',
     }),];
 
-    this.socket = new WebSocketSubject('ws://localhost:3000');
+    this.socket = new WebSocketSubject('wss://websocket-chatzin.glitch.me/');
 
     this.socket.subscribe(
       (message) => {
