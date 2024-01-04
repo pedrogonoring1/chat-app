@@ -79,6 +79,28 @@ textarea:focus, input:focus, select:focus {
   cursor: pointer;
 }
 
+.img-user-active {
+  width: 38px;
+  height: 38px;
+  border-radius: 50px;
+  border: greenyellow;
+  border-style: solid;
+  border-width: 3px;
+  opacity: 50%;
+  margin-right: 5px;
+}
+
+.img-user-off {
+  width: 38px;
+  height: 38px;
+  border-radius: 50px;
+  border: rgb(255, 47, 47);
+  border-style: solid;
+  border-width: 3px;
+  opacity: 50%;
+  margin-right: 5px;
+}
+
 .img-user-page:hover {
   transition: 0.5s;
   opacity: 30%;
@@ -103,13 +125,23 @@ textarea:focus, input:focus, select:focus {
 }
 
 .card-owner-message {
-  background-color: rgb(58, 58, 58);
+  background-color: rgb(39, 39, 39);
   margin-bottom: 10px;
   padding-left: 15px;
   padding-right: 20px;
   padding-top: 10px;
   padding-bottom: 5px;
   border-radius: 15px 15px 0px 15px;
+}
+
+.card-sistema-message {
+  background-color: rgb(53, 49, 45);
+  margin-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  border-radius: 15px 15px 15px 0px;
 }
 
 .hora-envio {

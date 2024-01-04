@@ -4,20 +4,38 @@
       <h1>Chatzin</h1>
       <div class="col-12 text-end img-perfil-chat">
         <strong><label class="name-user-page">{{ nomeUser }} </label></strong>
-        <img [src]="urlImage" (click)="emDesenvolvimento()" class="img-user-page" alt="" >
+        <img [src]="urlImage"  class="img-user-page">
       </div>
-
     </div>
   </div>
   <div class="row">
-    <div class="col-12 mt-4">
-      <h5>Chat Geral:</h5>
+    <div class="col-12">
+      <label class="mb-1">Status Usuários:</label> <br>
+        <div class="col-12">
+          <img [src]="user.urlImage"  [ngClass]="user.class" *ngFor="let user of usersOnlineResponse">
+        </div>
     </div>
   </div>
   <div class="row mt-3 messages-container">
     <div class="col-12" #messagesContainer>
       <div *ngFor="let message of messages">
-        <div *ngIf="message.Owner === false">
+        <div *ngIf="message.Owner === 'sistema'">
+          <div class="col-10">
+            <div class="card-sistema-message">
+              <label class="label-mensagem" [innerHTML]="message.Content"></label> <br>
+              <div class="d-flex mt-2 mb-2">
+                <div class="img-container" appExpandImage>
+                  <img [src]="message.UrlImage" class="img-user" alt=""  (click)="clicouExpandirImagem()">
+                </div>
+                <label class="name-user">{{ message.NomeUser }}</label>
+                <div class="ms-auto">
+                  <label class="hora-envio"><i class="bi bi-clock"></i> {{ message.Horario }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="message.Owner === 'receptor'">
           <div class="col-10">
             <div class="card-message">
               <label class="label-mensagem" [innerHTML]="message.Content"></label> <br>
@@ -33,7 +51,7 @@
             </div>
           </div>
         </div>
-        <div *ngIf="message.Owner === true">
+        <div *ngIf="message.Owner === 'remetente'">
           <div class="col-12 d-flex">
             <div class="col-2">
             </div>

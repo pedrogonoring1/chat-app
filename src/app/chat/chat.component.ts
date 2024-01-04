@@ -7,6 +7,9 @@ import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MESSAGE_FORM_CONFIG } from './config/user.config';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { enc, AES } from 'crypto-js';
+import { environment } from '../environments/environment';
+import { UserOnlineResponse } from './models/responses/user-online.response';
 
 @Component({
   selector: 'app-chat',
@@ -24,7 +27,9 @@ export class ChatComponent implements OnInit  {
   countEnvio: number = 0;
   disabledSendMessage: boolean = false;
   public messageForm: FormGroup;
-  private htmlContent: SafeHtml | null;
+  public usersOnlineResponse: UserOnlineResponse[];
+
+  private readonly CHAVE = environment.chaveCript;
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -34,7 +39,7 @@ export class ChatComponent implements OnInit  {
     private renderer: Renderer2,
     private el: ElementRef
   ) {
-
+    this.setupVisibilityChange();
   }
 
   private builderForm(): void {
@@ -50,13 +55,14 @@ export class ChatComponent implements OnInit  {
   ngOnInit(): void {
     this.builderForm();
     this.recuperarDadosUserLogado();
+    this.usersOnlineResponse = [new UserOnlineResponse({nome: this.nomeUser, urlImage: this.urlImage, class: 'img-user-active'})];
     this.textExpandir = 'Expandir'
     this.exibirExpandir = true;
     this.messages = [new MessageResponse({
-      Content: 'As mensagens são temporárias e não persistem ao longo do tempo. Em outras palavras, as mensagens são específicas da sessão e apenas os usuários ativos no momento exato do envio as receberão. 😉',
+      Content: 'As mensagens são temporárias e não persistem em nenhum banco de dados. As mensagens são <b>criptografados</b> de ponta a ponta. 😉',
       Horario: this.obterHoraAtual(),
       NomeUser: 'Sistema',
-      Owner: false,
+      Owner: 'sistema',
       UrlImage: 'https://i.pinimg.com/originals/2d/cc/93/2dcc9384250518a03fc038c363b689b8.gif',
     }),];
 
@@ -66,19 +72,64 @@ export class ChatComponent implements OnInit  {
       (message) => {
           try {
             let messagesRecebidas: MessageResponse = JSON.parse(message);
-            this.sanitizer.bypassSecurityTrustHtml(messagesRecebidas.Content);
-            this.messages.push(messagesRecebidas);
-            this.countEnvio = 0;
-            this.disabledSendMessage = false;
+
+            if(messagesRecebidas.Type === 'getUser') {
+              this.verificarSeEhNovoUsuario(new UserOnlineResponse({nome: messagesRecebidas.NomeUser, urlImage: messagesRecebidas.UrlImage, class: messagesRecebidas.Class}));
+            }
+            if(messagesRecebidas.Type === 'setUserInativo') {
+              this.editarUser(new UserOnlineResponse({nome: messagesRecebidas.NomeUser, urlImage: messagesRecebidas.UrlImage, class: messagesRecebidas.Class}));
+            }
+            else {
+              this.sanitizer.bypassSecurityTrustHtml(messagesRecebidas.Content);
+              messagesRecebidas.Content = this.descriptografarContent(messagesRecebidas.Content);
+              this.messages.push(messagesRecebidas);
+              this.verificarSeEhNovoUsuario(new UserOnlineResponse({nome: messagesRecebidas.NomeUser, urlImage: messagesRecebidas.UrlImage, class: messagesRecebidas.Class}));
+              this.countEnvio = 0;
+              this.disabledSendMessage = false;
+            }
+
           } catch (error) {
             console.error('Erro ao analisar JSON:', error, message);
           }
       },
-      (err) => console.error(err),
-      () => console.log('WebSocket closed')
+      (err) => this.avisarQuedaWebsocket(),
+      () => this.avisarQuedaWebsocket()
     );
 
     this.avisarNovoIntegrante();
+  }
+
+  private verificarSeEhNovoUsuario(userMessage: UserOnlineResponse) {
+    const usuarioExistente = this.usersOnlineResponse.find(user => user.nome === userMessage.nome);
+
+    if (!usuarioExistente && userMessage.nome !== 'Sistema') {
+      this.usersOnlineResponse.push(userMessage);
+    }
+  }
+
+  private editarUser(userMessage: UserOnlineResponse) {
+    const index = this.usersOnlineResponse.findIndex(existingUser => existingUser.nome === userMessage.nome);
+
+    if (index !== -1) {
+      // Edita o usuário existente
+      this.usersOnlineResponse[index] = new UserOnlineResponse({nome: userMessage.nome, urlImage: userMessage.urlImage, class: userMessage.class});
+      // console.log(this.usersOnlineResponse[index])
+      // Ou você pode fazer a edição direta, por exemplo: this.users[index].urlImage = user.urlImage;
+    }
+  }
+
+  private setupVisibilityChange(): void {
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        // A página está oculta (usuário não ativo)
+        //console.log('saiu da pagina');
+        this.avisarUserInativo();
+      } else {
+        this.avisarUserVoltou();
+        // A página está visível (usuário ativo)
+        // this.editarUser(new UserOnlineResponse({nome: this.nomeUser, urlImage: this.urlImage, class: 'img-user-active'}))
+      }
+    });
   }
 
   public clicouExpandirImagem() {
@@ -113,7 +164,8 @@ export class ChatComponent implements OnInit  {
 
     let newMessage = this.createMessage(textMessage);
     this.socket.next(JSON.stringify(newMessage));
-    newMessage.Owner = true;
+    newMessage.Owner = 'remetente';
+    newMessage.Content = textMessage;
 
     this.messages.push(newMessage);
     this.scrollMessagesToBottom();
@@ -123,7 +175,6 @@ export class ChatComponent implements OnInit  {
 
   private isSafeHtml(html: string): boolean {
     if(html.includes("<script>")) {
-      this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(html);
       this.notification.warning('Não é permitido scripts', 'Calma Calabreso!');
       return true;
     }
@@ -131,17 +182,76 @@ export class ChatComponent implements OnInit  {
     return false;
   }
 
+  private avisarUserInativo() {
+    let informarUserInativo = new MessageRequest({
+      NomeUser: this.nomeUser,
+      Horario: this.obterHoraAtual(),
+      UrlImage: this.urlImage,
+      Type: 'setUserInativo',
+      Class: 'img-user-off'
+    });
+
+    this.socket.next(JSON.stringify(informarUserInativo));
+  }
+
+  private avisarUserVoltou() {
+    let informarUserInativo = new MessageRequest({
+      NomeUser: this.nomeUser,
+      Horario: this.obterHoraAtual(),
+      UrlImage: this.urlImage,
+      Type: 'setUserInativo',
+      Class: 'img-user-active'
+    });
+
+    this.socket.next(JSON.stringify(informarUserInativo));
+  }
+
   private avisarNovoIntegrante() {
+    let textBoasVindas = `${this.nomeUser} acabou de entrar na conversa! 👋`;
     let boasVindas = new MessageRequest({
       NomeUser: 'Sistema',
       Horario: this.obterHoraAtual(),
-      Content: `${this.nomeUser} acabou de entrar na conversa! 👋`,
-      Owner: false,
-      UrlImage: 'https://i.pinimg.com/originals/2d/cc/93/2dcc9384250518a03fc038c363b689b8.gif'
+      Content: this.criptografarContent(textBoasVindas),
+      Owner: 'sistema',
+      UrlImage: 'https://i.pinimg.com/originals/2d/cc/93/2dcc9384250518a03fc038c363b689b8.gif',
+      Type: 'chat',
+      Class: 'img-user-active'
     });
 
     this.socket.next(JSON.stringify(boasVindas));
-    boasVindas.Owner = true;
+    boasVindas.Owner = 'sistema';
+    boasVindas.Content = textBoasVindas;
+    this.messages.push(boasVindas);
+
+    let informarUserNew = new MessageRequest({
+      NomeUser: this.nomeUser,
+      Horario: this.obterHoraAtual(),
+      UrlImage: this.urlImage,
+      Type: 'getUser',
+      Class: 'img-user-active'
+    });
+
+    this.socket.next(JSON.stringify(informarUserNew));
+
+    this.scrollMessagesToBottom();
+
+    this.avisarUserVoltou();
+  }
+
+  private avisarQuedaWebsocket() {
+    let mensagemInstabilidade = `Houve uma instabilidade e a conexão caiu. Atualize a página para voltar a conversar.`;
+    let boasVindas = new MessageRequest({
+      NomeUser: 'Sistema',
+      Horario: this.obterHoraAtual(),
+      Content: this.criptografarContent(mensagemInstabilidade),
+      Owner: 'sistema',
+      UrlImage: 'https://i.pinimg.com/originals/2d/cc/93/2dcc9384250518a03fc038c363b689b8.gif',
+      Type: 'chat'
+    });
+
+    this.socket.next(JSON.stringify(boasVindas));
+    boasVindas.Owner = 'sistema';
+    boasVindas.Content = mensagemInstabilidade;
 
     this.messages.push(boasVindas);
     this.scrollMessagesToBottom();
@@ -151,10 +261,26 @@ export class ChatComponent implements OnInit  {
     return new MessageRequest({
       NomeUser: this.nomeUser,
       Horario: this.obterHoraAtual(),
-      Content: content,
-      Owner: false,
-      UrlImage: this.urlImage
+      Content: this.criptografarContent(content),
+      Owner: 'receptor',
+      UrlImage: this.urlImage,
+      Type: 'chat',
+      Class: 'img-user-active'
     });
+  }
+
+  public criptografarContent(content: string): string {
+    const chaveCriptografia = this.CHAVE;
+    const numeroCriptografado = AES.encrypt(content, chaveCriptografia).toString();
+    const hashCriptografado = encodeURIComponent(numeroCriptografado);
+    return hashCriptografado;
+  }
+
+  public descriptografarContent(contentCriptografado: string): string {
+    const chaveCriptografia = this.CHAVE;
+    const bytesDescriptografados = AES.decrypt(decodeURIComponent(contentCriptografado), chaveCriptografia);
+    const textDescriptografado = bytesDescriptografados.toString(enc.Utf8);
+    return textDescriptografado;
   }
 
   private obterHoraAtual(): string {

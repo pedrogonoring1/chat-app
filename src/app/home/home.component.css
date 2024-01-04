@@ -16,7 +16,6 @@
   border-radius: 50px;
   height: 50px;
   padding-left: 20px;
-  width: 50%;
   margin-right: 7px;
 }
 
@@ -47,7 +46,9 @@ textarea:focus, input:focus, select:focus {
   color: rgb(119, 119, 119);
   margin-left: 5px;
   border-radius: 50px;
-  font-size: 22px;
+  font-size: 15px;
+  width: 150px;
+  height: 50px;
 }
 
 .btn-send:hover {
