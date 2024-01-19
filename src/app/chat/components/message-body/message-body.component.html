@@ -1,0 +1,10 @@
+<label class="label-mensagem" [innerHTML]="message.Content"></label> <br>
+<div class="d-flex mt-2 mb-2">
+  <div class="img-container" appExpandImage>
+    <img [src]="message.UrlImage" class="img-user" (click)="emitExpandImage()">
+  </div>
+  <label class="name-user">{{ message.NomeUser }}</label>
+  <div class="ms-auto">
+    <label class="hora-envio"><i class="bi bi-clock"></i> {{ message.Horario }}</label>
+  </div>
+</div>

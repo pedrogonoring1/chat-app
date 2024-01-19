@@ -4,7 +4,6 @@
       <h1>Chatzin</h1>
     </div>
   </div>
-
   <div class="row mt-5">
     <div class="col-12 col-md-6 text-center">
       <img src="https://static.vecteezy.com/system/resources/previews/009/315/269/non_2x/3d-social-media-with-video-and-photo-gallery-platform-online-social-communication-applications-concept-emoji-webpage-search-icons-chat-with-smartphone-background-image-3d-render-free-png.png" alt="" class="icon-hand">
@@ -13,22 +12,15 @@
       <label class="label-informativa">Bem-vindo(a) ao Chatzin, o seu chat criptografado de sessão.</label>
     </div>
   </div>
-
   <div class="row mt-5 text-center mb-5">
     <div class="col-12 mt-4">
       <label>Para começar, basta informar um <strong>nickname</strong> e uma url de uma foto ou <strong>gif.</strong></label>
     </div>
     <form [formGroup]="userForm">
-    <div class="col-12 mt-4">
-      <div class="col-12">
+    <div class="col-12 mt-4 forms-acess">
         <input type="text" class="form-control input-message" placeholder="👦 Digite seu nickname" [maxLength]="30" formControlName="Name">
-      </div>
-      <div class="col-12 mt-2">
         <input type="text" class="form-control input-message" placeholder="🔗 Cole a URL da foto ou gif de perfil" [maxLength]="2000" formControlName="UrlImage">
-      </div>
-      <div class="col-12 mt-3">
         <button class="btn btn-send" (click)="acessar()" [disabled]="userForm.invalid">Entrar</button>
-      </div>
     </div>
   </form>
   </div>

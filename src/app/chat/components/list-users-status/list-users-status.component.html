@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="col-12">
+    <label class="mb-1">Status dos Usuários:</label> <br>
+      <div class="col-12">
+        <img [src]="user.urlImage"  [ngClass]="user.class" *ngFor="let user of usersOnlineResponse">
+      </div>
+  </div>
+</div>

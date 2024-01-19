@@ -1,0 +1,7 @@
+<div class="container">
+  <app-header-chat [nameUser]="nomeUser" [urlImage]="urlImage"></app-header-chat>
+  <app-list-users-status [usersOnlineResponse]="usersOnlineResponse"></app-list-users-status>
+  <app-list-messages [messages]="messages"></app-list-messages>
+  <app-send-messages [disabledSendMessage]="disabledSendMessage" (onSendMessage)="sendMessage($event)"></app-send-messages>
+</div>
+

@@ -1,0 +1,20 @@
+.img-perfil-chat {
+  margin-top: -35px;
+}
+
+.img-user-page {
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.img-user-page:hover {
+  transition: 0.5s;
+  opacity: 30%;
+}
+
+.name-user-page {
+  color: rgb(184, 184, 184);
+  margin-right: 10px;
+}

@@ -1,0 +1,55 @@
+.messages-container {
+  max-height: 400px; /* ou a altura desejada */
+  overflow-y: auto;
+}
+
+.card-sistema-message {
+  background-color: rgb(53, 49, 45);
+  margin-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  border-radius: 25px 25px 25px 0px;
+}
+
+/* barra de roladgem */
+/* Para navegadores WebKit (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #6e6e6e;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #383838;
+  border-radius: 10px;
+}
+
+.card-message {
+  background-color: rgb(46, 46, 46);
+  margin-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  border-radius: 25px 25px 25px 0px;
+}
+
+.card-owner-message {
+  background-color: rgb(39, 39, 39);
+  margin-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  border-radius: 25px 25px 0px 25px;
+}
+
+.img-user.expanded {
+  width: 50%; /* Faz com que a imagem ocupe 100% da largura do contêiner pai */
+  height: auto; /* Mantém a proporção original da imagem */
+}

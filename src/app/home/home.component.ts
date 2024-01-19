@@ -20,8 +20,8 @@ export class HomeComponent implements OnInit {
     private readonly formBuilder: FormBuilder,
     private localStorageService: LocalStorageService,
     private router: Router,
-    private readonly notification: ToastrService,) {
-
+    private readonly notification: ToastrService,
+    ) {
   }
 
   ngOnInit(): void {
@@ -34,9 +34,18 @@ export class HomeComponent implements OnInit {
 
   public acessar() {
     this.localStorageService.setItem('User', this.userForm.value.Name);
-    this.localStorageService.setItem('UrlImage', this.userForm.value.UrlImage);
+    this.localStorageService.setItem('UrlImage', this.validarUrlImage(this.userForm.value.UrlImage));
     this.notification.success('Seja bem-vindo(a)', this.userForm.value.Name);
     this.router.navigate(['/chat/messages']);
+  }
+
+  private validarUrlImage(urlImage: string): string {
+    const urlRegex = /^https:\/\/.*/;
+
+    if(urlImage === null || !urlRegex.test(urlImage))
+      return 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+    else
+      return this.userForm.value.UrlImage;
   }
 
 }
