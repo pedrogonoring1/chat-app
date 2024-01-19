@@ -61,7 +61,7 @@ export class ChatComponent implements OnInit {
             else {
               this.sanitizer.bypassSecurityTrustHtml(messagesRecebidas.Content);
               messagesRecebidas.Content = this.criptografyService.descriptografarContent(messagesRecebidas.Content);
-              this.messages.push(messagesRecebidas);
+              this.messages = [...this.messages, messagesRecebidas];
               this.verificarSeEhNovoUsuario(userOnline);
               this.countEnvio = 0;
               this.disabledSendMessage = false;
@@ -128,7 +128,7 @@ export class ChatComponent implements OnInit {
 
     newMessage.Owner = 'remetente';
     newMessage.Content = content;
-    this.messages.push(newMessage);
+    this.messages = [...this.messages, newMessage];
     this.countEnvio++;
   }
 
@@ -202,7 +202,7 @@ export class ChatComponent implements OnInit {
 
     boasVindas.Owner = 'sistema';
     boasVindas.Content = textBoasVindas;
-    this.messages.push(boasVindas);
+    this.messages = [...this.messages, boasVindas];
 
     let informarUserNew = this.createMessage('', this.nomeUser, '', this.urlImage, 'getUser', 'img-user-active');
     this.socket.next(JSON.stringify(informarUserNew));
@@ -217,7 +217,7 @@ export class ChatComponent implements OnInit {
 
     messageSystemDown.Owner = 'sistema';
     messageSystemDown.Content = mensagemInstabilidade;
-    this.messages.push(messageSystemDown);
+    this.messages = [...this.messages, messageSystemDown];
   }
   //<h2>Confira as regras para os blocos do carnaval de rua na Grande Vitória:</h2> <br> <img src="https://classic.exame.com/wp-content/uploads/2021/01/carnaval-20202-rio-divulgacao-riotur.jpg?quality=70&strip=info&w=960" class="img-fluid"> <br><br>  <p>Com o carnaval se aproximando, as prefeituras da Grande Vitória se organizam para receber milhares de foliões nos blocos de rua. Horários para começo e fim do bloco, percurso definido, controle da poluição sonora, além de proibições como a realização de queima de fogos estão entre as regras divulgadas... </p> Acesse a notícia completa: <a href="https://g1.globo.com/es/espirito-santo/carnaval/2024/noticia/2024/01/11/confira-as-regras-para-os-blocos-do-carnaval-de-rua-na-grande-vitoria.ghtml" target="_blank">G1 Vilha Velha</a>
 }

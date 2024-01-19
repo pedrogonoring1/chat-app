@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
 import { MessageResponse } from '../../models/responses/message.response';
 
 @Component({
@@ -6,7 +6,7 @@ import { MessageResponse } from '../../models/responses/message.response';
   templateUrl: './list-messages.component.html',
   styleUrls: ['./list-messages.component.css']
 })
-export class ListMessagesComponent implements OnInit {
+export class ListMessagesComponent implements OnInit, OnChanges {
 
   public showUserImage: boolean;
 
@@ -18,9 +18,15 @@ export class ListMessagesComponent implements OnInit {
     this.showUserImage = true;
   }
 
-  ngAfterViewChecked() {
-    this.scrollMessagesToBottom();
+  ngOnChanges(changes: any): void {
+    setTimeout(() => {
+      this.scrollMessagesToBottom();
+    }, 200);
   }
+
+  // ngAfterViewChecked() {
+  //   this.scrollMessagesToBottom();
+  // }
 
   public clicouExpandirImagem(): void {
     this.showUserImage = !this.showUserImage;
