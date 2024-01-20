@@ -19,10 +19,10 @@ export class ChatComponent implements OnInit {
   public nomeUser: string;
   public urlImage: string;
   private socket: WebSocketSubject<any>;
-  private countEnvio: number = 0;
+  private countEnvio: number;
   public disabledSendMessage: boolean = false;
   public usersOnlineResponse: UserOnlineResponse[];
-  private readonly nameSistem: string = 'Sistema';
+  private readonly nameSistem: string = 'SISTEMA 🤖';
   private readonly urlImageSistem: string = 'https://i.pinimg.com/originals/2d/cc/93/2dcc9384250518a03fc038c363b689b8.gif';
 
   constructor(
@@ -35,6 +35,7 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.countEnvio = 0;
     this.recuperarDadosUserLogado();
     this.usersOnlineResponse = [this.userInitial()];
     this.messages = [this.messageInitial()];
@@ -44,7 +45,7 @@ export class ChatComponent implements OnInit {
     this.avisarNovoIntegrante();
   }
 
-  private instanciarSocket() {
+  private instanciarSocket(): void {
     this.socket.subscribe(
       (message) => {
           try {
@@ -75,7 +76,7 @@ export class ChatComponent implements OnInit {
   }
 
   private messageInitial(): MessageRequest {
-    let content = 'As mensagens são temporárias e não persistem em banco de dados. Além disso, elas são <b>criptografados</b> de ponta a ponta.';
+    let content = 'As mensagens são temporárias, não ficam salvas em banco de dados e são <b>criptografadas</b> de ponta a ponta.';
     let messageInitial = this.createMessage(content, this.nameSistem, 'sistema', this.urlImageSistem, 'chat', 'img-user-active');
     messageInitial.Content = this.criptografyService.descriptografarContent(messageInitial.Content);
     return messageInitial;
@@ -85,15 +86,15 @@ export class ChatComponent implements OnInit {
     return new UserOnlineResponse({nome: this.nomeUser, urlImage: this.urlImage, class: 'img-user-active'});
   }
 
-  private verificarSeEhNovoUsuario(userMessage: UserOnlineResponse) {
+  private verificarSeEhNovoUsuario(userMessage: UserOnlineResponse): void {
     const usuarioExistente = this.usersOnlineResponse.find(user => user.nome === userMessage.nome);
 
-    if (!usuarioExistente && userMessage.nome !== 'Sistema') {
+    if (!usuarioExistente && userMessage.nome !== this.nameSistem) {
       this.usersOnlineResponse.push(userMessage);
     }
   }
 
-  private editarUser(userMessage: UserOnlineResponse) {
+  private editarUser(userMessage: UserOnlineResponse): void {
     const index = this.usersOnlineResponse.findIndex(existingUser => existingUser.nome === userMessage.nome);
 
     if (index !== -1) { // Edita o usuário existente
@@ -113,12 +114,12 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  private recuperarDadosUserLogado() {
+  private recuperarDadosUserLogado(): void {
     this.nomeUser = this.localStorageService.getItem('User');
     this.urlImage = this.localStorageService.getItem('UrlImage');
   }
 
-  public sendMessage(content: string) {
+  public sendMessage(content: string): void {
     if(this.bypassSendMessage(content))
       return;
 
@@ -132,7 +133,7 @@ export class ChatComponent implements OnInit {
     this.countEnvio++;
   }
 
-  private bypassSendMessage(content: string) {
+  private bypassSendMessage(content: string): boolean {
     let spam: boolean = false;
     let contentNull: boolean = false;
     let isNotSefe: boolean = false;
@@ -185,18 +186,18 @@ export class ChatComponent implements OnInit {
     return `${horas}:${minutos}`;
   }
 
-  private avisarUserInativo() {
+  private avisarUserInativo(): void {
     let informarUserInativo = this.createMessage('', this.nomeUser, '', this.urlImage, 'setUserInativo', 'img-user-off');
     this.socket.next(JSON.stringify(informarUserInativo));
   }
 
-  private avisarUserVoltou() {
+  private avisarUserVoltou(): void {
     let informarUserInativo = this.createMessage('', this.nomeUser, '', this.urlImage, 'setUserInativo', 'img-user-active');
     this.socket.next(JSON.stringify(informarUserInativo));
   }
 
-  private avisarNovoIntegrante() {
-    let textBoasVindas = `${this.nomeUser} acabou de entrar na conversa! 👋`;
+  private avisarNovoIntegrante(): void {
+    let textBoasVindas = `<b>${this.nomeUser}</b> entrou na conversa! 👋`;
     let boasVindas = this.createMessage(textBoasVindas, this.nameSistem, 'sistema', this.urlImageSistem, 'chat', 'img-user-active');
     this.socket.next(JSON.stringify(boasVindas));
 
@@ -210,7 +211,7 @@ export class ChatComponent implements OnInit {
     this.avisarUserVoltou();
   }
 
-  private avisarQuedaWebsocket() {
+  private avisarQuedaWebsocket(): void {
     let mensagemInstabilidade = `Houve uma instabilidade e a conexão caiu. Atualize a página para voltar a conversar.`;
     let messageSystemDown = this.createMessage(mensagemInstabilidade, this.nameSistem, 'sistema', this.urlImageSistem, 'chat', '');
     this.socket.next(JSON.stringify(messageSystemDown));

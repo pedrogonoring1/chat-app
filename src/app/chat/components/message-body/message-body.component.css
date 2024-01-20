@@ -25,5 +25,9 @@
 .hora-envio {
   font-size: 12px;
   color: rgb(138, 138, 138);
-  margin-top: 10px;
+  margin-top: -80px;
+}
+
+.check-envio {
+  font-size: 16px;
 }

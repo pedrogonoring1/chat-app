@@ -4,13 +4,15 @@
 }
 
 .card-sistema-message {
-  background-color: rgb(53, 49, 45);
+  background-color: rgb(65, 50, 35);
   margin-bottom: 10px;
   padding-left: 15px;
   padding-right: 20px;
   padding-top: 10px;
   padding-bottom: 5px;
   border-radius: 25px 25px 25px 0px;
+  overflow: hidden;
+  word-wrap: break-word;
 }
 
 /* barra de roladgem */
@@ -37,6 +39,8 @@
   padding-top: 10px;
   padding-bottom: 5px;
   border-radius: 25px 25px 25px 0px;
+  overflow: hidden;
+  word-wrap: break-word;
 }
 
 .card-owner-message {
@@ -47,6 +51,8 @@
   padding-top: 10px;
   padding-bottom: 5px;
   border-radius: 25px 25px 0px 25px;
+  overflow: hidden;
+  word-wrap: break-word;
 }
 
 .img-user.expanded {

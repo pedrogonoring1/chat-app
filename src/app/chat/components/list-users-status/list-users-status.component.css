@@ -3,6 +3,10 @@
   color: rgb(138, 138, 138);
 }
 
+.card-user {
+  margin-right: 5px;
+}
+
 .img-user-active {
   width: 35px;
   height: 35px;
@@ -11,7 +15,7 @@
   border-style: solid;
   border-width: 3px;
   opacity: 50%;
-  margin-right: 5px;
+  margin-bottom: -5px;
 }
 
 .img-user-off {
@@ -22,7 +26,7 @@
   border-style: solid;
   border-width: 3px;
   opacity: 50%;
-  margin-right: 5px;
+  margin-bottom: -5px;
 }
 
 .bi-person-fill-check {
@@ -31,4 +35,9 @@
 
 .bi-person-fill-x {
   color: rgb(255, 60, 34);
+}
+
+.name-user {
+  font-size: 9px;
+  color: rgb(177, 177, 177);
 }

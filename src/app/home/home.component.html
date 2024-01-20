@@ -18,7 +18,7 @@
     </div>
     <form [formGroup]="userForm">
     <div class="col-12 mt-4 forms-acess">
-        <input type="text" class="form-control input-message" placeholder="👦 Digite seu nickname" [maxLength]="30" formControlName="Name">
+        <input type="text" class="form-control input-message" placeholder="👦 Digite seu nickname" [maxLength]="10" formControlName="Name">
         <input type="text" class="form-control input-message" placeholder="🔗 Cole a URL da foto ou gif de perfil" [maxLength]="2000" formControlName="UrlImage">
         <button class="btn btn-send" (click)="acessar()" [disabled]="userForm.invalid">Entrar</button>
     </div>

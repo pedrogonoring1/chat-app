@@ -1,8 +1,15 @@
 <div class="row">
   <div class="col-12">
-    <label class="mb-1">Status dos Usuários:</label> <br>
-      <div class="col-12">
-        <img [src]="user.urlImage"  [ngClass]="user.class" *ngFor="let user of usersOnlineResponse">
+    <label class="mb-1">Usuários:</label> <br>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="d-flex flex-wrap">
+      <div class="col-1 card-user text-center" *ngFor="let user of usersOnlineResponse">
+        <img [src]="user.urlImage" [ngClass]="user.class" class="align-self-center"> <br>
+        <label class="name-user text-center">{{ user.nome }}</label>
       </div>
+    </div>
   </div>
 </div>

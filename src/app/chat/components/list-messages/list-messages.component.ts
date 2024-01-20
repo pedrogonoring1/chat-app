@@ -24,10 +24,6 @@ export class ListMessagesComponent implements OnInit, OnChanges {
     }, 200);
   }
 
-  // ngAfterViewChecked() {
-  //   this.scrollMessagesToBottom();
-  // }
-
   public clicouExpandirImagem(): void {
     this.showUserImage = !this.showUserImage;
   }

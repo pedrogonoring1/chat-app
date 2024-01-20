@@ -1,7 +1,7 @@
 <div class="row mt-3">
   <form [formGroup]="messageForm">
   <div class="col-12 d-flex">
-    <div class="col-9">
+    <div class="col-10 col-md-9">
       <input
         placeholder="Digite aqui e aperte Enter para enviar" name="" id=""
         class="form-control input-message"
@@ -9,7 +9,7 @@
         [disabled]="disabledSendMessage"
         formControlName="Content" />
     </div>
-    <div class="col-3 d-flex">
+    <div class="col-1 col-md-3 d-flex">
       <button (click)="emitMessage()" class="btn btn-send" [disabled]="messageForm.invalid"><i class="bi bi-send"></i></button>
       <div class="d-none d-md-block">
         <button (click)="adicionarImagemChat()" class="btn btn-send" ><i class="bi bi-filetype-gif"></i></button>
