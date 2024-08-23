@@ -17,9 +17,9 @@
 .name-user {
   font-size: 13px;
   margin-left: 7px;
-  font-weight: bold;
+  font-weight: 500;
   margin-top: 5px;
-  color: rgb(138, 138, 138);
+  color: rgb(172, 172, 172);
 }
 
 .hora-envio {

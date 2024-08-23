@@ -1,9 +1,4 @@
 <div class="container p-5">
-  <div class="row">
-    <div class="col-12">
-      <h1>Chatzin</h1>
-    </div>
-  </div>
   <div class="row mt-5">
     <div class="col-12 col-md-6 text-center">
       <img src="https://static.vecteezy.com/system/resources/previews/009/315/269/non_2x/3d-social-media-with-video-and-photo-gallery-platform-online-social-communication-applications-concept-emoji-webpage-search-icons-chat-with-smartphone-background-image-3d-render-free-png.png" alt="" class="icon-hand">
@@ -14,14 +9,23 @@
   </div>
   <div class="row mt-5 text-center mb-5">
     <div class="col-12 mt-4">
-      <label>Para começar, basta informar um <strong>nickname</strong> e uma url de uma foto ou <strong>gif.</strong></label>
+      <label>Para começar, basta informar um <strong>nickname</strong>.</label>
     </div>
     <form [formGroup]="userForm">
-    <div class="col-12 mt-4 forms-acess">
-        <input type="text" class="form-control input-message" placeholder="👦 Digite seu nickname" [maxLength]="10" formControlName="Name">
-        <input type="text" class="form-control input-message" placeholder="🔗 Cole a URL da foto ou gif de perfil" [maxLength]="2000" formControlName="UrlImage">
+    <div class="col-12 mt-2 forms-acess">
+      <div class="col-3"></div>
+      <div class="col-6">
+        <input type="text" class="form-control input-message" placeholder="👦 Digite seu nickname" [maxLength]="15" formControlName="Name">
         <button class="btn btn-send" (click)="acessar()" [disabled]="userForm.invalid">Entrar</button>
+      </div>
+        <div class="col-3"></div>
     </div>
   </form>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-12 text-center mt-5">
+      <label class="info-owner-site">Desenvolvido por Pedro Gonoring - 2024 ©</label>
+    </div>
   </div>
 </div>

@@ -9,6 +9,7 @@ import { MessageBodyComponent } from './components/message-body/message-body.com
 import { HeaderChatComponent } from './components/header-chat/header-chat.component';
 import { SendMessagesComponent } from './components/send-messages/send-messages.component';
 import { ListUsersStatusComponent } from './components/list-users-status/list-users-status.component';
+import { AudioStreamComponent } from "./components/audio-stream/audio-stream.component";
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { ListUsersStatusComponent } from './components/list-users-status/list-us
     ListMessagesComponent,
     MessageBodyComponent,
     HeaderChatComponent,
+    AudioStreamComponent,
     SendMessagesComponent,
     ListUsersStatusComponent,
   ],
