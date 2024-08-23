@@ -76,7 +76,7 @@ export class ChatComponent implements OnInit {
   }
 
   private messageInitial(): MessageRequest {
-    let content = 'As mensagens são temporárias, não ficam salvas em banco de dados e são <b>criptografadas</b> de ponta a ponta.';
+    let content = 'As mensagens são temporárias, não ficam salvas e são <b>criptografadas</b> de ponta a ponta.';
     let messageInitial = this.createMessage(content, this.nameSistem, 'sistema', this.urlImageSistem, 'chat', 'img-user-active');
     messageInitial.Content = this.criptografyService.descriptografarContent(messageInitial.Content);
     return messageInitial;

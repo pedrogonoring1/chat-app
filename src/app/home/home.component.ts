@@ -35,7 +35,6 @@ export class HomeComponent implements OnInit {
   public acessar() {
     this.localStorageService.setItem('User', this.userForm.value.Name);
     this.localStorageService.setItem('UrlImage', this.validarUrlImage(this.userForm.value.UrlImage));
-    this.notification.success('Seja bem-vindo(a)', this.userForm.value.Name);
     this.router.navigate(['/chat/messages']);
   }
 

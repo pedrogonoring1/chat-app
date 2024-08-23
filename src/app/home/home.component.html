@@ -13,12 +13,8 @@
     </div>
     <form [formGroup]="userForm">
     <div class="col-12 mt-2 forms-acess">
-      <div class="col-3"></div>
-      <div class="col-6">
-        <input type="text" class="form-control input-message" placeholder="👦 Digite seu nickname" [maxLength]="15" formControlName="Name">
-        <button class="btn btn-send" (click)="acessar()" [disabled]="userForm.invalid">Entrar</button>
-      </div>
-        <div class="col-3"></div>
+      <input type="text" class="form-control input-message" placeholder="👦 Digite seu nickname" [maxLength]="15" formControlName="Name">
+      <button class="btn btn-send" (click)="acessar()" [disabled]="userForm.invalid">Entrar</button>
     </div>
   </form>
   </div>
