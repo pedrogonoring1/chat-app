@@ -16,6 +16,9 @@
         <button (click)="adicionarLinkChat()" class="btn btn-send" ><i class="bi bi-link-45deg"></i></button>
       </div>
       <button (click)="startTalking()" class="btn btn-send" ><i [className]="iconMicro"></i></button>
+      <div class="volume d-flex">
+        <input class="form-range volume" type="range" min="0" max="1" step="0.01" (input)="onVolumeChange($event)"> <label>vol.</label>
+      </div>
     </div>
   </div>
   </form>

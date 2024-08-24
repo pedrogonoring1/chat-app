@@ -2,9 +2,15 @@
   width: 300px;
 }
 
+.alinha-altura-inicial {
+  margin-top: 100px;
+}
+
 .label-informativa {
   font-size: 43px;
   font-weight: bold;
+  color: rgba(235, 235, 235, 0.616);
+  margin-top: 15px;
 }
 
 @media (min-width: 576px) {

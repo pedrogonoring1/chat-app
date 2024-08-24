@@ -30,6 +30,7 @@ export class SendMessagesComponent implements OnInit {
     this.startListening();
     this.microfoneAtivo = false;
     this.iconMicro = "bi bi-mic-mute";
+    this.audioService.setVolume(0.03);
   }
 
   private builderForm(): void {
@@ -71,4 +72,8 @@ export class SendMessagesComponent implements OnInit {
     this.audioService.listenToAudio();
   }
 
+  onVolumeChange(event: any) {
+    const volume = event.target.value;
+    this.audioService.setVolume(volume);
+  }
 }

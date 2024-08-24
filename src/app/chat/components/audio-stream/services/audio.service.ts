@@ -1,4 +1,3 @@
-// src/app/services/audio.service.ts
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 
@@ -10,10 +9,12 @@ export class AudioService {
   private audioContext: AudioContext;
   private processor: ScriptProcessorNode;
   private stream: MediaStream;
+  private gainNode: GainNode; // Adicionando o GainNode para controle de volume
 
   constructor() {
     this.socket = io('wss://websocket-audio.glitch.me/'); // URL do seu servidor Node.js
     this.audioContext = new AudioContext(); // Reutilizando o mesmo AudioContext
+    this.gainNode = this.audioContext.createGain(); // Inicializa o GainNode
   }
 
   public startRecording() {
@@ -52,7 +53,6 @@ export class AudioService {
 
         // Tente reproduzir áudio após acumular pacotes suficientes
         if (audioChunks.length > 100) {
-          // ajuste o valor conforme necessário
           const combined = new Float32Array(
             audioChunks.reduce((acc, val) => acc + val.length, 0)
           );
@@ -71,7 +71,8 @@ export class AudioService {
 
           const source = this.audioContext.createBufferSource();
           source.buffer = audioBuffer;
-          source.connect(this.audioContext.destination);
+          source.connect(this.gainNode); // Conecte o buffer ao GainNode
+          this.gainNode.connect(this.audioContext.destination);
           source.start();
 
           audioChunks.length = 0; // Limpa o buffer de pacotes
@@ -80,6 +81,10 @@ export class AudioService {
         console.error('Dados de áudio inválidos ou vazios');
       }
     });
+  }
+
+  public setVolume(volume: number) {
+    this.gainNode.gain.value = volume;
   }
 
   public stopRecording() {

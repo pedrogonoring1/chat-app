@@ -46,3 +46,20 @@ textarea:focus, input:focus, select:focus {
   border: 0 none;
   outline: 0;
 }
+
+.volume {
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 70px;
+}
+
+.volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px; /* Tamanho menor do thumb */
+  height: 16px; /* Tamanho menor do thumb */
+  background: #5a5a5a;
+  cursor: pointer;
+  border-radius: 50%;
+}
