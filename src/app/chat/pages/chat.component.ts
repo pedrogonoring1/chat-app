@@ -91,7 +91,9 @@ export class ChatComponent implements OnInit {
 
     if (!usuarioExistente && userMessage.nome !== this.nameSistem) {
       this.usersOnlineResponse.push(userMessage);
+      this.sendMessage("seja bem-vindo!");
     }
+
   }
 
   private editarUser(userMessage: UserOnlineResponse): void {
